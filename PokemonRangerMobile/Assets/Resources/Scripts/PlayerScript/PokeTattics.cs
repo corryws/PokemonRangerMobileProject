@@ -5,143 +5,118 @@ using UnityEngine.UI;
 
 public class PokeTattics : MonoBehaviour
 {
-
     //type dati dall'utente
     //effect e descrizioni sono date dalle varie funzioni per tipo
+    public enum Effect {Null,Pause, Tired, Slow, Stop, Confused};
 
-    public string choice_tactics_type,choice_effect;
-    public float TacticsTime;
-    public enum getEffect {Null,Pause, Tired, Slow, Stop, Confused};
-    public getEffect CurrentEffect;
-    public Image type_tactics_image;
+    [Header("TACTCIS VARIABLE")]
+    public Effect CurrentEffect;
+    public string choice_tactics_type;
+    public float TacticsTime=0f;
 
-    private GameObject OBJenemy;
-    private Enemy enemy;
-    private EnemyMovement enemymov;
-   
-    // Start is called before the first frame update
-    void Start()
-    {   
-        OBJenemy                  = GameObject.FindWithTag("Pokemon");
-        enemy                     = OBJenemy.GetComponent<Enemy>();
-        enemymov                  = OBJenemy.GetComponent<EnemyMovement>();
-        choice_tactics_type       = GameManager.take_player_tactics;
-        choice_effect             = "";
-        type_tactics_image.sprite = Resources.Load<Sprite>("Sprites/Pokemon_type_icon/"+choice_tactics_type.ToLower()+"_type"); 
+    public bool isActive;
 
-        SplitTacticsEffect();
-    }
+    void FixedUpdate(){TacticsCountDown();}
 
-    // Update is called once per frame
-    void Update()
+//Following method split effect when start battle
+    void SplitTacticsEffect(string choice_tactics_type)
     {
-        TacticsCountDown();
-    }
-
-    //Following method split effect when start battle
-    void SplitTacticsEffect()
-    {
-        if(choice_tactics_type == "Null")                                         CurrentEffect = getEffect.Null;
+        if(choice_tactics_type == "Null")                                         CurrentEffect = Effect.Null;
 
         if(choice_tactics_type == "Grass"    || choice_tactics_type == "Flying"   || choice_tactics_type == "Water"  ||
-           choice_tactics_type == "Rock"     || choice_tactics_type == "Bug")     CurrentEffect = getEffect.Slow;
+           choice_tactics_type == "Rock"     || choice_tactics_type == "Bug")     CurrentEffect = Effect.Slow;
 
         if(choice_tactics_type == "Electric" || choice_tactics_type == "Ice"      || choice_tactics_type == "Psychic")
-                                                                                  CurrentEffect = getEffect.Stop;
+                                                                                  CurrentEffect = Effect.Stop;
 
         if(choice_tactics_type == "Fire"     || choice_tactics_type == "Poison"   ||
-           choice_tactics_type == "Ghost"    || choice_tactics_type == "Dragon")  CurrentEffect = getEffect.Tired;
+           choice_tactics_type == "Ghost"    || choice_tactics_type == "Dragon")  CurrentEffect = Effect.Tired;
 
-        if(choice_tactics_type == "Ground"   || choice_tactics_type == "Steel")   CurrentEffect = getEffect.Pause;
+        if(choice_tactics_type == "Ground"   || choice_tactics_type == "Steel")   CurrentEffect = Effect.Pause;
 
         if(choice_tactics_type == "Normal"   || choice_tactics_type == "Fighting" || 
-           choice_tactics_type == "Dark"     || choice_tactics_type == "Fairy")   CurrentEffect = getEffect.Confused;
+           choice_tactics_type == "Dark"     || choice_tactics_type == "Fairy")   CurrentEffect = Effect.Confused;
     }
 
-    //Following method split tactics effect function when pokemon is inside a circle
+//Following method split tactics effect function when pokemon is inside a circle
     public void SplitFunctionTacticsEffect()
     {
-        if(CurrentEffect == getEffect.Slow)     SlowEffect(); 
-        if(CurrentEffect == getEffect.Stop)     StopEffect();          
-        if(CurrentEffect == getEffect.Tired)    TiredEffect();          
-        if(CurrentEffect == getEffect.Pause)    PauseEffect();            
-        if(CurrentEffect == getEffect.Confused) ConfusedEffect();   
+        if(CurrentEffect == Effect.Slow)          SlowEffect("slow"); 
+        else if(CurrentEffect == Effect.Stop)     StopEffect("stop");          
+        else if(CurrentEffect == Effect.Tired)    TiredEffect("tired");          
+        else if(CurrentEffect == Effect.Pause)    PauseEffect("pause");            
+        else if(CurrentEffect == Effect.Confused) ConfusedEffect("confused");   
     }
 
-    //Following method is SlowEffect
-    public void SlowEffect()//POKEMON IS MORE SLOW
+//Following method is SlowEffect
+    public void SlowEffect(string choice_effect)//POKEMON IS MORE SLOW
     {
-        choice_effect = "slow";
         if(TacticsTime > 0)
         {
             SetIconTactics(choice_effect,true);
-            enemymov.speed = (GameManager.take_enemy_speed*25)/100;
+            pokemon.GetComponent<PokemonSpawnSetting>().pkm_speed =
+            (pokemon.GetComponent<PokemonSpawnSetting>().pkm_speed*25)/100;
         }
     }
 
-    //Following method is StopEffect
-    public void StopEffect()//POKEMON NOT MOVE AND NOT ATTACK
+//Following method is StopEffect
+    public void StopEffect(string choice_effect)//POKEMON NOT MOVE AND NOT ATTACK
     {
-        choice_effect = "stop";
         if(TacticsTime > 0)
         {
             SetIconTactics(choice_effect,true);
-            enemymov.speed=0; enemymov.StartTimeBtwAttack = 999;
+            pokemon.GetComponent<PokemonMovement>().setPauseState();
         }
     }
 
-    //Following method is TiredEffect
-    public void TiredEffect()//STOP ENEMY FRIEND HEALTH BAR(NON SCENDE)
+//Following method is TiredEffect
+    public void TiredEffect(string choice_effect)//STOP ENEMY FRIEND HEALTH BAR(NON SCENDE)
     {
-        choice_effect = "tired";
         if(TacticsTime > 0)
         {
             SetIconTactics(choice_effect,true);
-            enemy.timecircle = 999;
+            pokemon.GetComponent<PokemonSpawnSetting>().timecircle = 999;
         }
     }
 
-    //Following method is PauseEffect
-    public void PauseEffect()//POKEMON NOT ATTACK
+//Following method is PauseEffect
+    public void PauseEffect(string choice_effect)//POKEMON NOT ATTACK
     {
-        choice_effect = "pause";
         if(TacticsTime > 0)
         {
             SetIconTactics(choice_effect,true);
-            enemymov.StartTimeBtwAttack = 999;
+            pokemon.GetComponent<PokemonMovement>().setPauseState();
         }
     }
 
-    //Following method is ConfusedEffect
-    public void ConfusedEffect()
+//Following method is ConfusedEffect
+    public void ConfusedEffect(string choice_effect)
     {
-        choice_effect = "confused";
-        if(TacticsTime > 0)
-        {
-            SetIconTactics(choice_effect,true);
-        }
+        if(TacticsTime > 0) SetIconTactics(choice_effect,true);
     }
 
-    //Folowing method enabled animation icon of tacticseffect
+//Folowing method enabled animation icon of tacticseffect
     public void SetIconTactics(string name,bool enable)
     {
-        OBJenemy.transform.GetChild(0).gameObject.SetActive(enable);
-        Animator anim = OBJenemy.transform.GetChild(0).GetComponent<Animator>();
-        anim.SetBool(name,enable);
+        /*pokemon.transform.GetChild(0).gameObject.SetActive(enable);
+        Animator anim = pokemon.transform.GetChild(0).GetComponent<Animator>();
+        anim.SetBool(name,enable);*/
     }
 
     //Following method set Effect Time Duration
-    public void SetTime(){TacticsTime = 8f;}
+    public void SetTime()
+    {
+        TacticsTime = 8f;
+        SplitTacticsEffect(GameManager.take_player_tactics);
+    }
 
     //Following methos simplify the countdown code
     public void ZeroTime()
     {
-        Animator animator = GameObject.Find("Tactics_graphic").GetComponent<Animator>();
+        Animator tacticsanim = GameObject.Find("Tactics_graphic").GetComponent<Animator>();
         bool isOpen       = animator.GetBool("show");
-        SetIconTactics  (choice_effect,false);
-        animator.SetBool("show",!isOpen);
-        enemy.Set_enemy_parameters();
-        enemymov.Start();
+        tacticsanim.SetBool("show",!isOpen);
+        //SetIconTactics  ("slow",false);
     }
 
     //Following method is the effective countdown duration to Effect

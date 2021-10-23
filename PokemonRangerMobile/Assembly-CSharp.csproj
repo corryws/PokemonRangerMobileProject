@@ -36,25 +36,29 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\Scripts\ManagerScript\ChoicePokemon.cs" />
+     <Compile Include="Assets\Resources\Scripts\ManagerScript\TitleManagerScript.cs" />
      <Compile Include="Assets\Resources\Scripts\ManagerScript\BattleManager.cs" />
      <Compile Include="Assets\Resources\Scripts\ManagerScript\SliderMenuScript.cs" />
      <Compile Include="Assets\Resources\DDSystem\Demo\Scripts\TestMessage_Selection.cs" />
-     <Compile Include="Assets\Resources\Scripts\EnemyScript\EnemyMovement.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\PokemonMovement.cs" />
      <Compile Include="Assets\Resources\DDSystem\Demo\Scripts\TestMessage.cs" />
      <Compile Include="Assets\Resources\DDSystem\Script\DialogManager.cs" />
-     <Compile Include="Assets\Resources\Scripts\EnemyScript\Pokemon.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\Pokemon.cs" />
      <Compile Include="Assets\Resources\Scripts\StylerScript\StylerTriggerScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\EnemyScript\ObstacleScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\EnemyScript\BulletScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\ObstacleScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\StylerScript\StylerEdgeCollision.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\BulletScript.cs" />
      <Compile Include="Assets\Resources\DDSystem\Script\DialogBase.cs" />
+     <Compile Include="Assets\Resources\Scripts\ManagerScript\TitleScreenScript.cs" />
      <Compile Include="Assets\Resources\DDSystem\Script\EmotionDrawer.cs" />
      <Compile Include="Assets\Resources\Scripts\ManagerScript\GameManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\MovesetPokemon\charizardMoveset.cs" />
      <Compile Include="Assets\Resources\Scripts\PlayerScript\PokeTattics.cs" />
      <Compile Include="Assets\Resources\DDSystem\Script\Character.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\MovesetPokemon\bulbasaurMoveset.cs" />
      <Compile Include="Assets\Resources\Scripts\StylerScript\DrawStyler.cs" />
-     <Compile Include="Assets\Resources\Scripts\ManagerScript\DatabasePokemon.cs" />
-     <Compile Include="Assets\Resources\Scripts\EnemyScript\Enemy.cs" />
+     <Compile Include="Assets\Resources\Scripts\ManagerScript\HUDSCriptManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\PokemonSpawnSetting.cs" />
      <Compile Include="Assets\Resources\Scripts\PlayerScript\Player.cs" />
      <None Include="Assets\Resources\DDSystem\Graphic\NANUM_LICENSE.txt" />
     <Reference Include="UnityEngine">
@@ -280,7 +284,7 @@
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.16f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.16f1/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -637,40 +641,40 @@
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.16f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-        <HintPath>C:/Users/Corrado/Desktop/KEYOFGAMES/PROJECT_POCKETWARRIOR/PokemonRangerMobile/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+        <HintPath>C:/Users/Corrado/Documents/GitHub/PokemonRangerMobileProject/PokemonRangerMobile/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

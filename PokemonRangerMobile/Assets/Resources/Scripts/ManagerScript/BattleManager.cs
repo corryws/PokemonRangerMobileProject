@@ -6,117 +6,51 @@ using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
+    public GameObject PrefabPokemon,player_obj;
+    Player              _player;
+    HUDSCriptManager    _hudmanager;
+    PokeTattics         _plytattics;
+    int RandomPkmnSpawn=0,countpokemon=0;
 
-    public  Text increment_text;
-    public  GameObject EndBattleBorder,TacticsButton;
-    private GameObject OBJenemy;
-    private GameObject OBJPlayer;
-    private GameObject OBJstyler;
-    Player player;
-    PokeTattics poketattics;
-    Enemy enemy;
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        OBJenemy      = GameObject.FindWithTag("Pokemon");
-        OBJPlayer     = GameObject.FindWithTag("Player");
-        OBJstyler     = GameObject.FindWithTag("StylerController");
-        TacticsButton = GameObject.Find("TacticsButton");
-        enemy         = OBJenemy.GetComponent<Enemy>();
-        player        = OBJPlayer.GetComponent<Player>();
-        poketattics   = OBJPlayer.GetComponent<PokeTattics>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(player.tacticsslider.value == player.tactics_energy) TacticsButton.GetComponent<Button>().interactable = true;
-        else TacticsButton.GetComponent<Button>().interactable = false;
-
-        PlayerLifeControl();
-    }
-
-    //    Following method is called by DrawStyler when the pokemon is inside the circle
-    public void InsideCircle()
-    {
-        enemy.circle+=Random.Range(1,2);
-        StartCoroutine(IncrementText());
-        poketattics.SplitFunctionTacticsEffect();
-        if(poketattics.TacticsTime <= 0) player.EnergyTacticsIncrement();
-        EndCatchBattle();
-    }
-
-    //    Following method enable or nor the element of battle
-    private void BattleObjectControll(bool enable,bool wincondition)
-    {
-        string capture_text_0, capture_text_1;
-        Animator animator = GameObject.Find("Tactics_graphic").GetComponent<Animator>(); 
-
-        EndBattleBorder.SetActive(!enable);
-        if(wincondition) 
+        //countpokemon=RandomPkmnSpawn = Random.Range(1,5);
+        countpokemon=RandomPkmnSpawn = 1;
+        for(int i=0;i<RandomPkmnSpawn;i++)
         {
-            player.IncrementExp();
-            capture_text_0 = "POKEMON CATTURATO"; capture_text_1 = "Esperienza Ceduta:     +"+(10+player.add_bonus);
-        }else {capture_text_0 = "GAME OVER"; capture_text_1 = "";}
-
-        EndBattleBorder.transform.GetChild(0).GetComponent<Text>().text = capture_text_0;
-        EndBattleBorder.transform.GetChild(1).GetComponent<Text>().text = capture_text_1;
-        animator.SetBool("show",false);poketattics.TacticsTime = 0f;
+            Vector3 pkmpos = new Vector3(Random.Range(-2f,2f),Random.Range(-2f,2f),1f);
+            Instantiate(PrefabPokemon,pkmpos,Quaternion.identity);
+        }
         
-        OBJstyler.SetActive(enable);
-        OBJenemy.GetComponent<Enemy>().enabled = OBJenemy.GetComponent<EnemyMovement>().enabled = enable;  
+        _hudmanager = GameObject.Find("HUDManager").GetComponent<HUDSCriptManager>();
+        _plytattics = player_obj.GetComponent<PokeTattics>();
+        _player     = player_obj.GetComponent<Player>();
+        player_obj.SetActive(true);
+        _hudmanager.setEndBattleBorder(false);
     }
 
-    //    Following method check if a Pokemon is catch or not
-    private void EndCatchBattle(){if(enemy.circle == enemy.circlemax+1) BattleObjectControll(false,true);}
-
-    //    Following method check life Player, defeat or not
-    private void PlayerLifeControl(){if(player.life <= 0) BattleObjectControll(false,false);}
-
-    //    Following method confrim the continue button 
-    public void OnConfirmBtn()
+    public void EndBattle(bool win)
     {
-        BattleObjectControll(true,false);
-        OBJstyler  .GetComponent<DrawStyler>().DestroyElement();
-        player     .SetPlayerLife();
-        player     .EnergyTacticsReset();
-        enemy      .Set_enemy_parameters();
-        enemy      .SetCircleLife();
-        poketattics.SetIconTactics(poketattics.choice_effect,false);
+        player_obj.transform.GetChild(0).gameObject.GetComponent<DrawStyler>().DestroyElement();
+
+        Animator _tacticsanim   = GameObject.Find("Tactics_graphic").GetComponent<Animator>();
+        _plytattics.TacticsTime = 0f;
+        _tacticsanim.SetBool("show",false);
+
+        _hudmanager.setEndBattleBorder(true);
+        countpokemon = RandomPkmnSpawn;
+
+        if(win)//VINTO
+        {
+            int valueexp = 10+_player.add_bonus+RandomPkmnSpawn;
+            _player.IncrementExp();
+            StartCoroutine(_hudmanager.IncrementExpSlide(valueexp));
+            _hudmanager.setEndBattleBorderComponent("POKEMON CATTURATO",""+(valueexp));
+        }else//GAME OVER
+        {
+            _hudmanager.setEndBattleBorderComponent("GAME OVER","");
+        }
     }
 
-    //    Following method confrim the back button 
-    public void OnAnnulBtn(){Application.LoadLevel(0);}
-
-    //    Following method Run from Battle
-    public void OnRunButton(){Application.LoadLevel(0);}
-
-    //    Following method run all tactics function and showup tactics_popup
-    public void OnPokeTacticsButton()
-    {
-        Animator animator = GameObject.Find("Tactics_graphic").GetComponent<Animator>();
-            if(animator != null)
-            {
-                bool isOpen = animator.GetBool("show"); 
-                animator.SetBool("show",!isOpen);
-            }
-        player.EnergyTacticsReset();
-        poketattics.SetTime();
-        TacticsButton.GetComponent<Button>().interactable = false;
-    }
-
-    //    Following method enable and disable increment text obj
-    IEnumerator IncrementText()
-    {
-        int remaincircle = enemy.circlemax - enemy.circle;
-        increment_text.gameObject.SetActive(true);
-
-        if(remaincircle < 0) increment_text.color = Color.yellow;
-        else increment_text.color = Color.blue;
-
-        increment_text.text=(""+Mathf.Abs(remaincircle));
-        yield return new WaitForSeconds(1f);
-        increment_text.gameObject.SetActive(false);
-    }
+    public void CheckCatchPokemon(){if(--countpokemon<=0)EndBattle(true);}
 }
