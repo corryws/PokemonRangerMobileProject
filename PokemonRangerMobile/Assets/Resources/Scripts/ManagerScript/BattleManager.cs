@@ -14,8 +14,8 @@ public class BattleManager : MonoBehaviour
 
     void Awake()
     {
-        //countpokemon=RandomPkmnSpawn = Random.Range(1,5);
-        countpokemon=RandomPkmnSpawn = 1;
+        countpokemon=RandomPkmnSpawn = Random.Range(1,5);
+        //countpokemon=RandomPkmnSpawn = 1;
         for(int i=0;i<RandomPkmnSpawn;i++)
         {
             Vector3 pkmpos = new Vector3(Random.Range(-2f,2f),Random.Range(-2f,2f),1f);

@@ -17,6 +17,7 @@ MonoBehaviour:
   circlemax: 10
   pkm_speed: 10
   bullet_time_spd: 2
+  islegendary: 1
   name: mew
   type_one: 9
   type_two: 0

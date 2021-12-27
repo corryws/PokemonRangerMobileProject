@@ -13,7 +13,7 @@ public class PokeTattics : MonoBehaviour
     public Effect CurrentEffect;
     public string choice_tactics_type;
     public float TacticsTime=0f;
-
+    public GameObject pokemon;
     public bool isActive;
 
     void FixedUpdate(){TacticsCountDown();}
@@ -114,7 +114,7 @@ public class PokeTattics : MonoBehaviour
     public void ZeroTime()
     {
         Animator tacticsanim = GameObject.Find("Tactics_graphic").GetComponent<Animator>();
-        bool isOpen       = animator.GetBool("show");
+        bool isOpen       = tacticsanim.GetBool("show");
         tacticsanim.SetBool("show",!isOpen);
         //SetIconTactics  ("slow",false);
     }

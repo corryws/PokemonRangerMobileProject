@@ -48,6 +48,7 @@
      <Compile Include="Assets\Resources\Scripts\PokemonScript\ObstacleScript.cs" />
      <Compile Include="Assets\Resources\Scripts\StylerScript\StylerEdgeCollision.cs" />
      <Compile Include="Assets\Resources\Scripts\PokemonScript\BulletScript.cs" />
+     <Compile Include="Assets\Resources\Scripts\ManagerScript\MenuManager.cs" />
      <Compile Include="Assets\Resources\DDSystem\Script\DialogBase.cs" />
      <Compile Include="Assets\Resources\Scripts\ManagerScript\TitleScreenScript.cs" />
      <Compile Include="Assets\Resources\DDSystem\Script\EmotionDrawer.cs" />
@@ -55,12 +56,17 @@
      <Compile Include="Assets\Resources\Scripts\PokemonScript\MovesetPokemon\charizardMoveset.cs" />
      <Compile Include="Assets\Resources\Scripts\PlayerScript\PokeTattics.cs" />
      <Compile Include="Assets\Resources\DDSystem\Script\Character.cs" />
+     <Compile Include="Assets\Resources\Scripts\ManagerScript\Leviosa.cs" />
      <Compile Include="Assets\Resources\Scripts\PokemonScript\MovesetPokemon\bulbasaurMoveset.cs" />
      <Compile Include="Assets\Resources\Scripts\StylerScript\DrawStyler.cs" />
      <Compile Include="Assets\Resources\Scripts\ManagerScript\HUDSCriptManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\PokemonScript\PokedexSystem.cs" />
      <Compile Include="Assets\Resources\Scripts\PokemonScript\PokemonSpawnSetting.cs" />
      <Compile Include="Assets\Resources\Scripts\PlayerScript\Player.cs" />
+     <None Include="Assets\Resources\DatabasePokemon\_fieldname.txt" />
+     <None Include="Assets\Resources\DatabasePokemon\_registered.txt" />
      <None Include="Assets\Resources\DDSystem\Graphic\NANUM_LICENSE.txt" />
+     <None Include="Assets\Resources\DatabasePokemon\_description.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2021.1.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

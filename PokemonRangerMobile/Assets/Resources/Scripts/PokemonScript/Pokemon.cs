@@ -8,6 +8,7 @@ public class Pokemon : ScriptableObject
     public AnimatorOverrideController ThisPokemonAnimator;
     public int circlemax;
     public float pkm_speed, bullet_time_spd;
+    public bool islegendary;
     public string name;
 
     public enum Type
